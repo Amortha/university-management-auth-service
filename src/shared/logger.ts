@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
-import { createLogger, format, transports } from 'winston'
 import path from 'path'
+import { createLogger, format, transports } from 'winston'
+import DailyRotateFile from 'winston-daily-rotate-file'
+
 const { combine, timestamp, label, printf, prettyPrint } = format
 
 //Custom log Format
@@ -18,25 +20,54 @@ const logger = createLogger({
   format: combine(label({ label: 'PH' }), timestamp(), myFormat, prettyPrint()),
   transports: [
     new transports.Console(),
-    new transports.File({
-      filename: path.join(process.cwd(), 'logs', 'winston', 'success.log'),
-      level: 'info',
+    new DailyRotateFile({
+      filename: path.join(
+        process.cwd(),
+        'logs',
+        'winston',
+        'successes',
+        'phu-%DATE%-success.log'
+      ),
+      datePattern: 'DD-MM-YYYY-HH',
+      zippedArchive: true,
+      maxSize: '20m',
+      maxFiles: '14d',
     }),
   ],
 })
 const errorlogger = createLogger({
   level: 'error',
-  format: combine(label({ label: 'right meow!' }), timestamp(), myFormat),
+  format: combine(label({ label: 'PH' }), timestamp(), myFormat),
   transports: [
     new transports.Console(),
-    new transports.File({
-      filename: path.join(process.cwd(), 'logs', 'winston', 'error.log'),
-      level: 'error',
+    new DailyRotateFile({
+      filename: path.join(
+        process.cwd(),
+        'logs',
+        'winston',
+        'successes',
+        'phu-%DATE%-error.log'
+      ),
+      datePattern: 'DD-MM-YYYY-HH',
+      zippedArchive: true,
+      maxSize: '20m',
+      maxFiles: '14d',
     }),
+
+    // new transports.File({
+    //   filename: path.join(process.cwd(),
+    //   'logs',
+    //   'winston',
+    //   'errors',
+    //   'phu-%DATE%-error.log'
+    //   ),
+
+    //   level: 'error',
+    // }),
   ],
 })
 export { logger, errorlogger }
 
 //log/winston/
-// success.log
-//error.log
+// success/success.log
+//error/error.log
