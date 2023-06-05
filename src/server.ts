@@ -1,22 +1,18 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 import app from './app'
-import config from "./config/index"
+import config from './config/index'
+import { logger, errorlogger } from './shared/logger'
 
 async function bootstrap() {
-    try {
-        await mongoose.connect(config.database_url as string);
-    console.log(`Database is connected successfully`)
-   
+  try {
+    await mongoose.connect(config.database_url as string)
+    logger.info(`Database is connected successfully`)
+
     app.listen(config.port, () => {
-        console.log(`Application listening on port ${config.port}`)
-      })
-
-} catch (err) {
-
-        console.log('Failed top connect database',err)
-    }
-
-
-
+      logger.info(`Application listening on port ${config.port}`)
+    })
+  } catch (err) {
+    errorlogger.error('Failed top connect database', err)
+  }
 }
-bootstrap();
+bootstrap()

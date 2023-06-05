@@ -1,19 +1,22 @@
-import express,{Application, Request,Response} from 'express';
+import express, { Application, Request, Response } from 'express'
 import cors from 'cors'
-const app : Application = express()
-const port = 3000
+import usersRouter from './app/modules/users/users.route'
+
+const app: Application = express()
 
 app.use(cors())
 
 //parser
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
+//Application routes
+// console.log(app.get('env'))
+
+app.use('/api/v1/users/', usersRouter)
 
 //Test
-app.get('/', (req:Request, res:Response) => {
+app.get('/', async (req: Request, res: Response) => {
   res.send('Hello World!')
 })
-
-
 
 export default app
