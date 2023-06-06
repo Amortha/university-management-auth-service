@@ -1,18 +1,12 @@
 import config from '../../config'
-
 import { IGenericErrorMessage } from '../../interfaces/error'
-import { NextFunction, Request, Response } from 'express'
+import { ErrorRequestHandler } from 'express'
 import ApiError from '../../errors/ApiError'
 import handleValidationError from '../../errors/handlevalidationError'
 
-const globalErrorHandler = (
-  error: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   let statusCode = 500
-  let message = 'somethig went weong !'
+  let message = 'something went wrong !'
   let errorMessages: IGenericErrorMessage[] = []
 
   if (error?.name === 'validationError') {
