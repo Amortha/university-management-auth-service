@@ -2,6 +2,7 @@ import express, { Application } from 'express'
 import cors from 'cors'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
 import { usersRouter } from './app/modules/users/user.route'
+// import { Promise } from 'mongoose'
 
 const app: Application = express()
 
@@ -16,11 +17,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/v1/users', usersRouter)
 
 //Test
-// app.get('/', (req: Request, res: Response, next: NextFunction) => {
-
-// // res.send('server running')
-//       throw new ApiError(400,'ora Baba Error')
-// //   // next('ore baba Error') //Error
+// app.get('/',async(req: Request, res: Response, next: NextFunction) => {
+// throw new Error ('testing eror logger')
 // })
 //global error handler
 app.use(globalErrorHandler)
