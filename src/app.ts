@@ -1,7 +1,7 @@
 import express, { Application } from 'express'
 import cors from 'cors'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
-import { usersRouter } from './app/modules/users/user.route'
+import { usersRouter } from './app/modules/user/user.route'
 // import { Promise } from 'mongoose'
 
 const app: Application = express()
