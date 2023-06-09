@@ -1,28 +1,28 @@
-import express, { Application } from 'express'
-import cors from 'cors'
-import globalErrorHandler from './app/middlewares/globalErrorHandler'
-import { usersRouter } from './app/modules/users/user.route'
+import express, { Application } from 'express';
+import cors from 'cors';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import { usersRouter } from './app/modules/user/user.route';
+import { AcademicSemesterRouters } from './app/modules/academicSemester/academicSemester.route';
+// import { Promise } from 'mongoose'
 
-const app: Application = express()
+const app: Application = express();
 
-app.use(cors())
+app.use(cors());
 
 //parser
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 //Application routes
 // console.log(app.get('env'))
 
-app.use('/api/v1/users', usersRouter)
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/academic-semesters', AcademicSemesterRouters);
 
 //Test
-// app.get('/', (req: Request, res: Response, next: NextFunction) => {
-
-// // res.send('server running')
-//       throw new ApiError(400,'ora Baba Error')
-// //   // next('ore baba Error') //Error
+// app.get('/',async(req: Request, res: Response, next: NextFunction) => {
+// throw new Error ('testing eror logger')
 // })
 //global error handler
-app.use(globalErrorHandler)
+app.use(globalErrorHandler);
 
-export default app
+export default app;
