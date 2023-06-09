@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import { usersRouter } from './app/modules/user/user.route';
+import { AcademicSemesterRouters } from './app/modules/academicSemester/academicSemester.route';
 // import { Promise } from 'mongoose'
 
 const app: Application = express();
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // console.log(app.get('env'))
 
 app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/academic-semesters', AcademicSemesterRouters);
 
 //Test
 // app.get('/',async(req: Request, res: Response, next: NextFunction) => {
