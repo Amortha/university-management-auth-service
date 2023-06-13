@@ -32,9 +32,11 @@ const getAllSemesters = catchAsync(
     //   sortBy: req.query.sortBy,
     //   sortOrder: req.query.sortOrder,
     // };
+    const filters = pick(req.query, ['searchTerm']);
     const paginationOptions = pick(req.query, paginationFields);
 
     const result = await AcademicSemesterService.getAllSemesters(
+      filters,
       paginationOptions
     );
     sendResponse<IAcademicSemester[]>(res, {
