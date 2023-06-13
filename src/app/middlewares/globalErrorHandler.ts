@@ -15,6 +15,7 @@ const globalErrorHandler: ErrorRequestHandler = (
   error,
   req,
   res,
+  // eslint-disable-next-line no-unused-vars
   next: NextFunction
 ) => {
   config.env === 'development'
@@ -68,7 +69,6 @@ const globalErrorHandler: ErrorRequestHandler = (
     errorMessages,
     stack: config.env !== 'production' ? error?.stack : undefined,
   });
-  next();
 };
 
 export default globalErrorHandler;
