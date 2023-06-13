@@ -10,5 +10,6 @@ router.post(
   validateRequest(AcademicSemestervalidation.createAcademicSemesterZodSchema),
   AcademicSemesterController.createSemester
 );
+router.get('/', AcademicSemesterController.getAllSemesters);
 
 export const AcademicSemesterRoutes = router;
