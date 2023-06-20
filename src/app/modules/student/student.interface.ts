@@ -55,3 +55,7 @@ export type IStudentFilters = {
   contactNo?: string;
   emergencyContactNo?: string;
 };
+
+export type IAcademicSemesterFilters = {
+  searchTerm?: string;
+};
