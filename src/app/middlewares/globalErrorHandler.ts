@@ -1,15 +1,14 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
 
-import config from '../../config';
-import { IGenericErrorMessage } from '../../interfaces/error';
 import { ErrorRequestHandler, NextFunction } from 'express';
-import ApiError from '../../errors/ApiError';
-import handleValidationError from '../../errors/handlevalidationError';
-import { errorlogger } from '../../shared/logger';
 import { ZodError } from 'zod';
-import handleZodError from '../../errors/handleZodError';
+import config from '../../config';
+import ApiError from '../../errors/ApiError';
 import handleCastError from '../../errors/handleCastError';
+import handleZodError from '../../errors/handleZodError';
+import handleValidationError from '../../errors/handlevalidationError';
+import { IGenericErrorMessage } from '../../interfaces/error';
 
 const globalErrorHandler: ErrorRequestHandler = (
   error,
@@ -20,7 +19,7 @@ const globalErrorHandler: ErrorRequestHandler = (
 ) => {
   config.env === 'development'
     ? console.log('globalErrorHandler', error)
-    : errorlogger.error('globalErrorHandler', error);
+    : console.log('globalErrorHandler', error);
 
   let statusCode = 500;
   let message = 'something went wrong !';
