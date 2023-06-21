@@ -1,3 +1,6 @@
+// import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
+// import { User } from './user.model';
+
 import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
 import { User } from './user.model';
 
