@@ -16,7 +16,7 @@ exports.UserService = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const index_1 = __importDefault(require("../../../config/index"));
-const apiError_1 = __importDefault(require("../../../errors/apiError"));
+const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const academicSemesterModel_1 = require("../academicSemester/academicSemesterModel");
 const student_model_1 = require("../student/student.model");
 const user_model_1 = require("./user.model");
@@ -40,13 +40,13 @@ const createStudent = (student, user) => __awaiter(void 0, void 0, void 0, funct
         student.id = id;
         const newStudent = yield student_model_1.Student.create([student], { session });
         if (!newStudent.length) {
-            throw new apiError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to create student');
+            throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to create student');
         }
         //set student -->_id into user.student
         user.student = newStudent[0]._id;
         const newUser = yield user_model_1.User.create([user], { session });
         if (!newUser.length) {
-            throw new apiError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to create student');
+            throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to create student');
         }
         newUserAllData = newUser[0];
         yield session.commitTransaction();

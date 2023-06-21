@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import { SortOrder } from 'mongoose';
-import ApiError from '../../../errors/apiError';
+import ApiError from '../../../errors/ApiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';

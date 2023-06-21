@@ -25,14 +25,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AcademicSemesterService = void 0;
 const http_status_1 = __importDefault(require("http-status"));
-const apiError_1 = __importDefault(require("../../../errors/apiError"));
+const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const paginationHelper_1 = require("../../../helpers/paginationHelper");
 const academicSemester_constant_1 = require("./academicSemester.constant");
 const academicSemesterModel_1 = require("./academicSemesterModel");
 const createSemester = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     //sumer 02 ! === 03
     if (academicSemester_constant_1.academicSemesterTitleCodeMapper[payload.title] !== payload.code) {
-        throw new apiError_1.default(http_status_1.default.BAD_REQUEST, 'invalid semester code');
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'invalid semester code');
     }
     const result = yield academicSemesterModel_1.AcademicSemester.create(payload);
     return result;
@@ -109,7 +109,7 @@ const updateSemester = (id, payload) => __awaiter(void 0, void 0, void 0, functi
     if (payload.title &&
         payload.code &&
         academicSemester_constant_1.academicSemesterTitleCodeMapper[payload.title] !== payload.code) {
-        throw new apiError_1.default(http_status_1.default.BAD_REQUEST, 'invalid semester code');
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'invalid semester code');
     }
     const result = yield academicSemesterModel_1.AcademicSemester.findOneAndUpdate({ _id: id }, payload, {
         new: true,

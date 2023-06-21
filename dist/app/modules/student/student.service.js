@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentService = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const http_status_1 = __importDefault(require("http-status"));
-const apiError_1 = __importDefault(require("../../../errors/apiError"));
+const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const paginationHelper_1 = require("../../../helpers/paginationHelper");
 const student_constant_1 = require("./student.constant");
 const student_model_1 = require("./student.model");
@@ -83,7 +83,7 @@ const getSingleStudent = (id) => __awaiter(void 0, void 0, void 0, function* () 
 const updateStudent = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const isExist = yield student_model_1.Student.findOne({ id });
     if (!isExist) {
-        throw new apiError_1.default(http_status_1.default.NOT_FOUND, 'student not found !');
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'student not found !');
     }
     const { name, guardian, localGuardian } = payload, studentData = __rest(payload, ["name", "guardian", "localGuardian"]);
     const updatedStudentData = Object.assign({}, studentData);
