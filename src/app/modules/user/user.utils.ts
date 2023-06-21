@@ -26,9 +26,14 @@ export const generateStudentId = async (
   let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0');
 
   //20 25
-  incrementedId = `${academicSemester.year.substring(2)}${
-    academicSemester.code
-  }${incrementedId}`;
+  // incrementedId = `${academicSemester.year.substring(2)}${
+  //   academicSemester.code
+  // }${incrementedId}`;
+  if (academicSemester) {
+    incrementedId = `${academicSemester.year.substring(2)}${
+      academicSemester.code
+    }${incrementedId}`;
+  }
 
   return incrementedId;
 };
