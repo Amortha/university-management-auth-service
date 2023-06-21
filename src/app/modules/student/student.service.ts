@@ -6,8 +6,8 @@ import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IStudent, IStudentFilters } from './student.interface';
 import { studentSearchableFields } from './student.constant';
 import { Student } from './student.model';
-import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
+import apiError from '../../../errors/apiError';
 
 const getAllStudents = async (
   filters: IStudentFilters,
@@ -79,7 +79,7 @@ const updateStudent = async (
 ): Promise<IStudent | null> => {
   const isExist = await Student.findOne({ id });
   if (!isExist) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'student not found !');
+    throw new apiError(httpStatus.NOT_FOUND, 'student not found !');
   }
   const { name, guardian, localGuardian, ...studentData } = payload;
 

@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AcademicSemester = void 0;
 const mongoose_1 = require("mongoose");
 const academicSemester_constant_1 = require("./academicSemester.constant");
-const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const http_status_1 = __importDefault(require("http-status"));
+const apiError_1 = __importDefault(require("../../../errors/apiError"));
 const academicSemesterSchema = new mongoose_1.Schema({
     title: {
         type: String,
@@ -55,7 +55,7 @@ academicSemesterSchema.pre('save', function (next) {
             year: this.year,
         });
         if (isExist) {
-            throw new ApiError_1.default(http_status_1.default.CONFLICT, 'Academic semester is already exist!');
+            throw new apiError_1.default(http_status_1.default.CONFLICT, 'Academic semester is already exist!');
         }
         next();
     });
