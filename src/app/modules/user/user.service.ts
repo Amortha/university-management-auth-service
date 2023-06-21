@@ -1,13 +1,13 @@
+import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import config from '../../../config/index';
+import ApiError from '../../../errors/apiError';
 import { AcademicSemester } from '../academicSemester/academicSemesterModel';
 import { IStudent } from '../student/student.interface';
 import { Student } from '../student/student.model';
 import { IUser } from './user.interface';
 import { User } from './user.model';
 import { generateStudentId } from './user.utils';
-import httpStatus from 'http-status';
-import apiError from '../../../errors/apiError';
 // import { generateFacultyId } from './user.utils';
 
 const createStudent = async (
@@ -38,14 +38,14 @@ const createStudent = async (
 
     const newStudent = await Student.create([student], { session });
     if (!newStudent.length) {
-      throw new apiError(httpStatus.BAD_REQUEST, 'Failed to create student');
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create student');
     }
     //set student -->_id into user.student
 
     user.student = newStudent[0]._id;
     const newUser = await User.create([user], { session });
     if (!newUser.length) {
-      throw new apiError(httpStatus.BAD_REQUEST, 'Failed to create student');
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create student');
     }
 
     newUserAllData = newUser[0];

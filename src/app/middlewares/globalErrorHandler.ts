@@ -4,12 +4,11 @@
 import { ErrorRequestHandler, NextFunction } from 'express';
 import { ZodError } from 'zod';
 import config from '../../config';
-
+import ApiError from '../../errors/apiError';
 import handleCastError from '../../errors/handleCastError';
 import handleZodError from '../../errors/handleZodError';
 import handleValidationError from '../../errors/handlevalidationError';
 import { IGenericErrorMessage } from '../../interfaces/error';
-import apiError from '../../errors/apiError';
 
 const globalErrorHandler: ErrorRequestHandler = (
   error,
@@ -41,7 +40,7 @@ const globalErrorHandler: ErrorRequestHandler = (
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
-  } else if (error instanceof apiError) {
+  } else if (error instanceof ApiError) {
     statusCode = error?.statusCode;
     message = error.message;
     errorMessages = error?.message

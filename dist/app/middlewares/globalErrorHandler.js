@@ -10,7 +10,6 @@ const config_1 = __importDefault(require("../../config"));
 const handleCastError_1 = __importDefault(require("../../errors/handleCastError"));
 const handleZodError_1 = __importDefault(require("../../errors/handleZodError"));
 const handlevalidationError_1 = __importDefault(require("../../errors/handlevalidationError"));
-const apiError_1 = __importDefault(require("../../errors/apiError"));
 const globalErrorHandler = (error, req, res, 
 // eslint-disable-next-line no-unused-vars
 next) => {
@@ -38,18 +37,18 @@ next) => {
         message = simplifiedError.message;
         errorMessages = simplifiedError.errorMessages;
     }
-    else if (error instanceof apiError_1.default) {
-        statusCode = error === null || error === void 0 ? void 0 : error.statusCode;
-        message = error.message;
-        errorMessages = (error === null || error === void 0 ? void 0 : error.message)
-            ? [
-                {
-                    path: '',
-                    message: error === null || error === void 0 ? void 0 : error.message,
-                },
-            ]
-            : [];
-    }
+    //else if (error instanceof apiError) {
+    //   statusCode = error?.statusCode;
+    //   message = error.message;
+    //   errorMessages = error?.message
+    //     ? [
+    //         {
+    //           path: '',
+    //           message: error?.message,
+    //         },
+    //       ]
+    //     : [];
+    // }
     else if (error instanceof Error) {
         message = error === null || error === void 0 ? void 0 : error.message;
         errorMessages = (error === null || error === void 0 ? void 0 : error.message)

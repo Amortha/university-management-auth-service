@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from 'http-status';
 import { SortOrder } from 'mongoose';
+import ApiError from '../../../errors/apiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
-import { IStudent, IStudentFilters } from './student.interface';
 import { studentSearchableFields } from './student.constant';
+import { IStudent, IStudentFilters } from './student.interface';
 import { Student } from './student.model';
-import httpStatus from 'http-status';
-import apiError from '../../../errors/apiError';
 
 const getAllStudents = async (
   filters: IStudentFilters,
@@ -79,7 +79,7 @@ const updateStudent = async (
 ): Promise<IStudent | null> => {
   const isExist = await Student.findOne({ id });
   if (!isExist) {
-    throw new apiError(httpStatus.NOT_FOUND, 'student not found !');
+    throw new ApiError(httpStatus.NOT_FOUND, 'student not found !');
   }
   const { name, guardian, localGuardian, ...studentData } = payload;
 

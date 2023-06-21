@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import { SortOrder } from 'mongoose';
-
+import ApiError from '../../../errors/apiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -13,14 +13,13 @@ import {
   IAcademicSemesterFilters,
 } from './academicSemester.interface';
 import { AcademicSemester } from './academicSemesterModel';
-import apiError from '../../../errors/apiError';
 
 const createSemester = async (
   payload: IAcademicSemester
 ): Promise<IAcademicSemester> => {
   //sumer 02 ! === 03
   if (academicSemesterTitleCodeMapper[payload.title] !== payload.code) {
-    throw new apiError(httpStatus.BAD_REQUEST, 'invalid semester code');
+    throw new ApiError(httpStatus.BAD_REQUEST, 'invalid semester code');
   }
   const result = await AcademicSemester.create(payload);
   return result;
@@ -120,7 +119,7 @@ const updateSemester = async (
     payload.code &&
     academicSemesterTitleCodeMapper[payload.title] !== payload.code
   ) {
-    throw new apiError(httpStatus.BAD_REQUEST, 'invalid semester code');
+    throw new ApiError(httpStatus.BAD_REQUEST, 'invalid semester code');
   }
 
   const result = await AcademicSemester.findOneAndUpdate({ _id: id }, payload, {

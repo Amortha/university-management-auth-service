@@ -109,7 +109,7 @@ const updateSemester = (id, payload) => __awaiter(void 0, void 0, void 0, functi
     if (payload.title &&
         payload.code &&
         academicSemester_constant_1.academicSemesterTitleCodeMapper[payload.title] !== payload.code) {
-        throw new ApiError(http_status_1.default.BAD_REQUEST, 'invalid semester code');
+        throw new apiError_1.default(http_status_1.default.BAD_REQUEST, 'invalid semester code');
     }
     const result = yield academicSemesterModel_1.AcademicSemester.findOneAndUpdate({ _id: id }, payload, {
         new: true,
