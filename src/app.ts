@@ -4,7 +4,7 @@ import express, { Application, NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import routers from './app/routes';
-
+import cookieParser from 'cookie-parser';
 // import { UsersRouter } from './app/modules/user/user.route';
 // import { AcademicSemesterRouters } from './app/modules/academicSemester/academicSemester.route';
 // import { Promise } from 'mongoose'
@@ -12,6 +12,7 @@ import routers from './app/routes';
 const app: Application = express();
 
 app.use(cors());
+app.use(cookieParser());
 
 //parser
 app.use(express.json());
