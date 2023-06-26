@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 import config from '../../../config/index';
 import ApiError from '../../../errors/ApiError';
 import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
-
+import httpStatus from 'http-status';
+import { AcademicSemester } from '../academicSemester/academicSemesterModel';
 import { IAdmin } from '../admin/admin.interface';
 import { Admin } from '../admin/admin.model';
 import { IFaculty } from '../faculty/faculty.interface';
@@ -16,9 +17,6 @@ import {
   generateFacultyId,
   generateStudentId,
 } from './user.utils';
-import httpStatus from 'http-status';
-import { AcademicSemester } from '../academicSemester/academicSemesterModel';
-import bcrypt from 'bcrypt';
 
 const createStudent = async (
   student: IStudent,
@@ -28,12 +26,6 @@ const createStudent = async (
   if (!user.password) {
     user.password = config.default_student_pass as string;
   }
-  //hash password
-
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds)
-  );
 
   // set role
   user.role = 'student';
@@ -106,6 +98,7 @@ const createFaculty = async (
   if (!user.password) {
     user.password = config.default_faculty_pass as string;
   }
+  console.log('faculty :', faculty, ' user:', user);
   // set role
   user.role = 'faculty';
 
@@ -166,6 +159,7 @@ const createAdmin = async (
   if (!user.password) {
     user.password = config.default_admin_pass as string;
   }
+
   // set role
   user.role = 'admin';
 
