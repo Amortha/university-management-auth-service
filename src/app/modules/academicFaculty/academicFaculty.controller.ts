@@ -40,6 +40,8 @@ const getAllFaculties = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getSingleFaculty = catchAsync(async (req: Request, res: Response) => {
+  console.log(req.headers.authorization);
+  console.log(req.user);
   const { id } = req.params;
   const result = await AcademicFacultyService.getSingleFaculty(id);
 

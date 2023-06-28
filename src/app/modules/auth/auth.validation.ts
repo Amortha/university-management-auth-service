@@ -6,7 +6,7 @@ const loginZodSchema = z.object({
       required_error: 'ID is required',
     }),
     password: z.string({
-      required_error: 'password is required',
+      required_error: 'Password is required',
     }),
   }),
 });
@@ -14,7 +14,7 @@ const loginZodSchema = z.object({
 const refreshTokenZodSchema = z.object({
   cookies: z.object({
     refreshToken: z.string({
-      required_error: 'Refresh Token is requird',
+      required_error: 'Refresh Token is required',
     }),
   }),
 });

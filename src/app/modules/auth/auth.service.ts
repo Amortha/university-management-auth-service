@@ -8,29 +8,30 @@ import {
   ILoginUser,
   ILoginUserResponse,
   IRefreshTokenResponse,
-} from './auth interface';
+} from './auth.interface';
 
 const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   const { id, password } = payload;
-
-  //creating instance of user
+  // creating instance of User
   // const user = new User();
-  // // access to our instance methods
-
-  // const isUserExist = await user.isUserExist(id)
+  //  // access to our instance methods
+  //   const isUserExist = await user.isUserExist(id);
 
   const isUserExist = await User.isUserExist(id);
+
   if (!isUserExist) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'user does not exist');
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
   }
 
   if (
     isUserExist.password &&
-    !(await User.isPasswordMatched(password, isUserExist?.password))
+    !(await User.isPasswordMatched(password, isUserExist.password))
   ) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'password is incorrect');
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Password is incorrect');
   }
-  // create access token
+
+  //create access token & refresh token
+
   const { id: userId, role, needsPasswordChange } = isUserExist;
   const accessToken = jwtHelpers.createToken(
     { userId, role },
@@ -53,24 +54,25 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
 
 const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
   //verify token
-  //invalid token - synchronous
+  // invalid token - synchronous
   let verifiedToken = null;
   try {
-    verifiedToken = jwtHelpers.verifiedToken(
+    verifiedToken = jwtHelpers.verifyToken(
       token,
       config.jwt.refresh_secret as Secret
     );
   } catch (err) {
     throw new ApiError(httpStatus.FORBIDDEN, 'Invalid Refresh Token');
   }
+
   const { userId } = verifiedToken;
 
-  //tumi delate hye gso kintu tumar refresh token ase
-  //checking deleted user's refresh token
+  // tumi delete hye gso  kintu tumar refresh token ase
+  // checking deleted user's refresh token
 
   const isUserExist = await User.isUserExist(userId);
   if (!isUserExist) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'user does not exist');
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
   }
   //generate new token
 
@@ -82,6 +84,7 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
   );
+
   return {
     accessToken: newAccessToken,
   };

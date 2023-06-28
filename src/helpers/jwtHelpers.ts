@@ -9,11 +9,12 @@ const createToken = (
     expiresIn: expireTime,
   });
 };
-const verifiedToken = (token: string, secret: Secret): JwtPayload => {
+
+const verifyToken = (token: string, secret: Secret): JwtPayload => {
   return jwt.verify(token, secret) as JwtPayload;
 };
 
 export const jwtHelpers = {
   createToken,
-  verifiedToken,
+  verifyToken,
 };

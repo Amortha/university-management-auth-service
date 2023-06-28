@@ -49,7 +49,7 @@ UserSchema.statics.isUserExist = async function (
   id: string
 ): Promise<Pick<
   IUser,
-  'id' | 'password' | 'needsPasswordChange' | 'role'
+  'id' | 'password' | 'role' | 'needsPasswordChange'
 > | null> {
   return await User.findOne(
     { id },
@@ -64,36 +64,31 @@ UserSchema.statics.isPasswordMatched = async function (
   return await bcrypt.compare(givenPassword, savedPassword);
 };
 
-//User.create() /user.save()
-
+// User.create() / user.save()
 UserSchema.pre('save', async function (next) {
-  //hashing user password
-
+  // hashing user password
   const user = this;
   user.password = await bcrypt.hash(
     user.password,
     Number(config.bcrypt_salt_rounds)
   );
-
   next();
 });
 
 export const User = model<IUser, UserModel>('User', UserSchema);
 
-// UserSchema.methods.isUserExist = async function(
-//   id:string
-//   ):Promise<Partial<IUser> | null>{
-//     return await User.findOne(
-//     {id},
-//     {id:1,password:1,needsPasswordChange:1}
-//     );
+// UserSchema.methods.isUserExist = async function (
+//   id: string
+// ): Promise<Partial<IUser> | null> {
+//   return await User.findOne(
+//     { id },
+//     { id: 1, password: 1, needsPasswordChange: 1 }
+//   );
+// };
 
-// }
-
-// UserSchema.methods.isPasswordMatched= async function(
-//   givenPassword:string,
-//   savedPassword:string
-//   ):Promise<boolean>{
-//     return await bcrypt.compare(givenPassword,savedPassword);
-
+// UserSchema.methods.isPasswordMatched = async function (
+//   givenPassword: string,
+//   savedPassword: string
+// ): Promise<boolean> {
+//   return await bcrypt.compare(givenPassword, savedPassword);
 // };
