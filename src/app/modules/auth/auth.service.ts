@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import httpStatus from 'http-status';
 import { JwtPayload, Secret } from 'jsonwebtoken';
 import config from '../../../config';
@@ -96,11 +95,15 @@ const changePassword = async (
   user: JwtPayload | null,
   payload: IChangePassword
 ): Promise<void> => {
-  const { oldPassword, newPassword } = payload;
+  const { oldPassword } = payload;
 
-  console.log({ user });
   //checking is user exist
-  const isUserExist = await User.isUserExist(user?.userId);
+  // const isUserExist = await User.isUserExist(user?.userId);
+
+  // alternative way
+  const isUserExist = await User.findOne({ id: user?.userId }).select(
+    '+password'
+  );
 
   if (!isUserExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
@@ -114,21 +117,25 @@ const changePassword = async (
     throw new ApiError(httpStatus.UNAUTHORIZED, 'old Password is incorrect');
   }
 
-  // hash password before saving
-  const newHashedPassword = await bcrypt.hash(
-    newPassword,
-    Number(config.bcrypt_salt_rounds)
-  );
+  // // hash password before saving
+  // const newHashedPassword = await bcrypt.hash(
+  //   newPassword,
+  //   Number(config.bcrypt_salt_rounds)
+  // );
 
-  const query = { id: user?.userId };
-  const updatedData = {
-    password: newHashedPassword,
-    needsPasswordChange: false,
-    passwordChangedAt: new Date(),
-  };
+  // const query = { id: user?.userId };
+  // const updatedData = {
+  //   password: newHashedPassword,
+  //   needsPasswordChange: false,
+  //   passwordChangedAt: new Date(),
+  // };
 
-  await User.findOneAndUpdate(query, updatedData);
-  // data update
+  // await User.findOneAndUpdate(query, updatedData);
+  // // data update
+
+  isUserExist.needsPasswordChange = false;
+  // updating using save()
+  isUserExist.save();
 };
 
 export const AuthService = {
