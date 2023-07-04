@@ -114,22 +114,21 @@ const changePassword = async (
     throw new ApiError(httpStatus.UNAUTHORIZED, 'old Password is incorrect');
   }
 
-  //  hash password before saving
+  // hash password before saving
   const newHashedPassword = await bcrypt.hash(
     newPassword,
-    config.bcrypt_salt_rounds as string
+    Number(config.bcrypt_salt_rounds)
   );
 
   const query = { id: user?.userId };
-
-  const updateData = {
+  const updatedData = {
     password: newHashedPassword,
-    newPasswordChange: false,
-    passwordChangeAt: new Date(),
+    needsPasswordChange: false,
+    passwordChangedAt: new Date(),
   };
 
-  //update password
-  await User.findByIdAndUpdate(query, updateData);
+  await User.findOneAndUpdate(query, updatedData);
+  // data update
 };
 
 export const AuthService = {

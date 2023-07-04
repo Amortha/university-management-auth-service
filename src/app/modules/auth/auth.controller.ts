@@ -55,10 +55,10 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
   const { ...passwordData } = req.body;
   await AuthService.changePassword(user, passwordData);
 
-  sendResponse<ILoginUserResponse>(res, {
+  sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'User lohggedin successfully !',
+    message: 'password changed successfully !',
   });
 });
 
